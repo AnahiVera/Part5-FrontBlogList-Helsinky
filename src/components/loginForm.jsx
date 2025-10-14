@@ -1,4 +1,8 @@
+import {useEffect } from 'react'
+
+
 import loginService from '../services/login'
+import blogService from '../services/blogs'
 
 // hooks
 import {useState } from 'react'
@@ -16,8 +20,16 @@ const LoginForm = ({ setUser, user }) => {
     
     try {
       const user = await loginService.login({
-        username, password,
+        username, password, 
       })
+
+      //guardar el usuario usando local storage del navegador (user es un objeto)
+       window.localStorage.setItem(
+        'loggedAppUser', JSON.stringify(user)
+      ) 
+
+
+      blogService.setToken(user.token) // le damos el token del objeto user, para que lo pase a las peticiones del blogService
       setUser(user)
       setUsername('')
       setPassword('')
@@ -29,8 +41,23 @@ const LoginForm = ({ setUser, user }) => {
     }
 }
 
+const handleLogout = async() => {
+    window.localStorage.removeItem('loggedAppUser')
+    setUser(null)
+    blogService.setToken(null) 
+} 
 
-console.log ('data verication', username, password, errorMessage)
+// revisa si el usuario esta en el local storage
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogService.setToken(user.token) // le damos el token del objeto user, para que lo pase a las peticiones del blogService
+    }
+  }, [])
+
+
 
  return ( 
   <div>
@@ -57,7 +84,13 @@ console.log ('data verication', username, password, errorMessage)
         <button type="submit">Login</button>
       </form>
     ) : (
+        <div>
       <div>{user.name} logged in</div>
+
+      <button onClick={handleLogout} className="logout-button">
+        Logout
+      </button>
+      </div>
     )}
   </div>
 )

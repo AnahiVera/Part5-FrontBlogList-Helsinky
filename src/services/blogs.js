@@ -13,27 +13,31 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-
+// agrega el token a la cabecera de la autorizacion es decir debe estar logueado para crear un blog
 const create = async newObject => {
-  const config = { headers: { Authorization: token }
-  ,}
-  const response = await axios.post(baseUrl, newObject, config)
+  const auth = { headers: { Authorization: token },
+  }
+  const response = await axios.post(baseUrl, newObject, auth)
   return response.data
 }
 
+
+
 const update = async (id, newObject) => {
-  const request = await axios.put(`${ baseUrl }/${id}`, newObject)
+  const auth = { headers: { Authorization: token },
+}
+  const request = await axios.put(`${ baseUrl }/${id}`, newObject, auth)
   return request.then(response => response.data)
 }
 
 const deleteBlog = async (id) => {
-  const config = { headers: { Authorization: token }
-  ,}
-  const response = await axios.delete(`${ baseUrl }/${id}`, config)
+  const auth= { headers: { Authorization: token },
+  }
+  const response = await axios.delete(`${ baseUrl }/${id}`, auth)
   return response.data
 }
 
 
 
 
-export default { getAll, create, update, deleteBlog }
+export default { getAll, create, update, deleteBlog, setToken }
