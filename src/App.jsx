@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 
-//components
-import LoginForm from './components/loginForm'
-import Blog from './components/Blog'
+//services
 import blogService from './services/blogs'
 
+//components
+import LoginForm from './components/loginForm';
+import Blog from './components/Blog';
+import CreateBlogForm from './components/createBlogForm';
+
 const App = () => {
+    const [errorMessage, setErrorMessage] = useState(null)  
   const [blogs, setBlogs] = useState([])
     const [user, setUser] = useState(null)
 
@@ -16,13 +20,13 @@ const App = () => {
   }, [])
 
   
-
+// crear componente de error message
   console.log('user', user)
 
   return (
     <div>
       <div>
-        <LoginForm  setUser={setUser} user = {user}/>
+        <LoginForm  setUser={setUser} user = {user} setErrorMessage={setErrorMessage}/>
       </div>
 
     <div>
@@ -31,6 +35,13 @@ const App = () => {
         <Blog key={blog.id} blog={blog} />
       )}
     </div>
+
+
+    <div>
+      <CreateBlogForm user={user} setErrorMessage={setErrorMessage}  />
+    </div>
+
+
 
     </div>
   )

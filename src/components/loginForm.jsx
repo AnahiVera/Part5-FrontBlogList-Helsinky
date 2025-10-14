@@ -8,9 +8,9 @@ import blogService from '../services/blogs'
 import {useState } from 'react'
 
 
-const LoginForm = ({ setUser, user }) => {
+const LoginForm = ({ setUser, user, setErrorMessage }) => {
     
-  const [errorMessage, setErrorMessage] = useState(null)  
+
  const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
 
