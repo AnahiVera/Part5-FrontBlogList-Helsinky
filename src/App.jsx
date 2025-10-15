@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 //services
 import blogService from './services/blogs'
@@ -8,6 +8,7 @@ import LoginForm from './components/loginForm';
 import Blog from './components/Blog';
 import CreateBlogForm from './components/createBlogForm';
 import Notification from './components/Notification';
+import Togglable from './components/Togglable';
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
@@ -15,18 +16,27 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
 
+  const blogFormRef = useRef()
+
+
+    // Función para obtener todos los blogs
+  const fetchBlogs = () => {
+    blogService.getAll().then(blogs => setBlogs(blogs))
+  }
+
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    fetchBlogs()
   }, [])
+
 
 
 
   return (
     <div>
       <div>
-        <LoginForm setUser={setUser} user={user} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage} />
+        <Togglable buttonLabel="Login">
+          <LoginForm setUser={setUser} user={user} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage} />
+        </Togglable>
       </div>
 
       <div>
@@ -38,7 +48,14 @@ const App = () => {
 
 
       <div>
-        <CreateBlogForm user={user} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage} />
+        <Togglable buttonLabel="New Blog" ref={blogFormRef}>
+          <CreateBlogForm 
+          user={user} 
+          fetchBlogs={fetchBlogs}
+          setErrorMessage={setErrorMessage} 
+          setSuccessMessage={setSuccessMessage}
+          blogFormRef={blogFormRef} />
+        </Togglable>
       </div>
 
 

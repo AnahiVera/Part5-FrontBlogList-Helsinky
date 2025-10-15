@@ -5,7 +5,7 @@ import blogService from '../services/blogs'
 
 
 
-const CreateBlogForm = ({ user, setErrorMessage, setSuccessMessage }) => {
+const CreateBlogForm = ({ user,fetchBlogs, setErrorMessage, setSuccessMessage, blogFormRef }) => {
 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -34,6 +34,14 @@ const CreateBlogForm = ({ user, setErrorMessage, setSuccessMessage }) => {
             setTimeout(() => {
                 setSuccessMessage(null)
             }, 5000)
+
+            fetchBlogs()  // actualizar la lista de blogs en el componente padre
+
+             // Hacer toggle para ocultar el formulario
+            if (blogFormRef.current) {
+                blogFormRef.current.toggleVisibility()
+            }
+        
 
         } catch (exception) {
             setErrorMessage('Error creating blog')
