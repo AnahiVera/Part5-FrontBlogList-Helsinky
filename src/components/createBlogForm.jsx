@@ -55,8 +55,7 @@ const CreateBlogForm = ({ user,fetchBlogs, setErrorMessage, setSuccessMessage, b
     // revisa si el usuario esta en el local storage
     useEffect(() => {
 
-    }
-        , [user])
+    }, [user])
 
     return (
         <div>

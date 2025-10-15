@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 
+//Css
+import './App.css'
+
 //services
 import blogService from './services/blogs'
 
@@ -29,12 +32,10 @@ const App = () => {
   }, [])
 
 
-
-
   return (
-    <div>
+    <div className='p-4'>
       <div>
-        <Togglable buttonLabel="Login">
+        <Togglable buttonLabel="Login" cancelLabel='Cancel'>
           <LoginForm setUser={setUser} user={user} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage} />
         </Togglable>
       </div>
@@ -48,7 +49,7 @@ const App = () => {
 
 
       <div>
-        <Togglable buttonLabel="New Blog" ref={blogFormRef}>
+        <Togglable buttonLabel="New Blog" cancelLabel='Cancel' ref={blogFormRef}>
           <CreateBlogForm 
           user={user} 
           fetchBlogs={fetchBlogs}
