@@ -7,41 +7,44 @@ import blogService from './services/blogs'
 import LoginForm from './components/loginForm';
 import Blog from './components/Blog';
 import CreateBlogForm from './components/createBlogForm';
+import Notification from './components/Notification';
 
 const App = () => {
-    const [errorMessage, setErrorMessage] = useState(null)  
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
   const [blogs, setBlogs] = useState([])
-    const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+      setBlogs(blogs)
+    )
   }, [])
 
-  
-// crear componente de error message
-  console.log('user', user)
+
 
   return (
     <div>
       <div>
-        <LoginForm  setUser={setUser} user = {user} setErrorMessage={setErrorMessage}/>
+        <LoginForm setUser={setUser} user={user} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage} />
       </div>
 
-    <div>
-      <h2>blogs</h2>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-    </div>
+      <div>
+        <h2>blogs</h2>
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} />
+        )}
+      </div>
 
 
-    <div>
-      <CreateBlogForm user={user} setErrorMessage={setErrorMessage}  />
-    </div>
+      <div>
+        <CreateBlogForm user={user} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage} />
+      </div>
 
 
+      {/* Notification components */}
+      <Notification message={errorMessage} type="error" />
+      <Notification message={successMessage} type="success" />
 
     </div>
   )

@@ -5,7 +5,7 @@ import blogService from '../services/blogs'
 
 
 
-const CreateBlogForm = ({user, setErrorMessage}) => {
+const CreateBlogForm = ({ user, setErrorMessage, setSuccessMessage }) => {
 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -19,7 +19,7 @@ const CreateBlogForm = ({user, setErrorMessage}) => {
         try {
             blogService.setToken(user.token)
 
-            newBlog = await blogService.create({
+           const newBlog = await blogService.create({
                 title, author, url,
             })
 
@@ -30,6 +30,10 @@ const CreateBlogForm = ({user, setErrorMessage}) => {
 
 
             // mostrar mensaje de exito 
+            setSuccessMessage(`Created successfully ${newBlog.title} by ${newBlog.author}`)
+            setTimeout(() => {
+                setSuccessMessage(null)
+            }, 5000)
 
         } catch (exception) {
             setErrorMessage('Error creating blog')
@@ -41,38 +45,38 @@ const CreateBlogForm = ({user, setErrorMessage}) => {
 
 
     // revisa si el usuario esta en el local storage
-      useEffect(() => {
+    useEffect(() => {
 
-      }
-    , [user])
+    }
+        , [user])
 
     return (
         <div>
             {user !== null ? (
                 <div>
-                 <h5>Create New Blog</h5>
-            <form onSubmit={handleNewBlog}>
+                    <h5>Create New Blog</h5>
+                    <form onSubmit={handleNewBlog}>
 
-                <div>
-                    <label htmlFor="title"> Title</label>
-                    <input id="title" type="text" value={title} name="Title" onChange={({ target }) => setTitle(target.value)} />
+                        <div>
+                            <label htmlFor="title"> Title</label>
+                            <input id="title" type="text" value={title} name="Title" onChange={({ target }) => setTitle(target.value)} />
+                        </div>
+                        <div>
+                            <label htmlFor="author">Author</label>
+                            <input id="author" type="text" value={author} name="Author" onChange={({ target }) => setAuthor(target.value)} />
+                        </div>
+                        <div>
+                            <label htmlFor="url"> Url</label>
+                            <input id="url" type="text" value={url} name="Url" onChange={({ target }) => setUrl(target.value)} />
+                        </div>
+
+                        <button type="submit">Add +</button>
+                    </form>
                 </div>
-                <div>
-                    <label htmlFor="author">Author</label>
-                    <input id="author" type="text" value={author} name="Author" onChange={({ target }) => setAuthor(target.value)} />
-                </div>
-                <div>
-                    <label htmlFor="url"> Url</label>
-                    <input id="url" type="text" value={url} name="Url" onChange={({ target }) => setUrl(target.value)} />
-                </div>
-                
-                 <button type="submit">Add +</button>
-            </form>
-            </div>
-        
-            ) : (<div>Please log in to create a blog</div>   ) }
-           
-</div>
+
+            ) : (<div>Please log in to create a blog</div>)}
+
+        </div>
     )
 }
 
