@@ -57,7 +57,10 @@ const LoginForm = ({ setUser, user, setErrorMessage, setSuccessMessage }) => {
         const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
-            setUser(user)
+            setUser({
+                ...user,
+                id: JSON.parse(atob(user.token.split('.')[1])).id // extrae el id user del token
+            })
             blogService.setToken(user.token) // le damos el token del objeto user, para que lo pase a las peticiones del blogService
         }
     }, [])
