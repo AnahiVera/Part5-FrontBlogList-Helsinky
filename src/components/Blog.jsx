@@ -10,6 +10,8 @@ const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
     setLikes(blog.likes)
   }, [blog.likes])
 
+
+
   const handleLike = async () => {
 
     const updatedBlogData = {
@@ -22,7 +24,6 @@ const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
 
     try {
       await blogService.update(blog.id, updatedBlogData)
-
       // Importante: también actualizamos el estado local para ver cambio inmediato
       setLikes(likes + 1)
 
