@@ -36,8 +36,21 @@ const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
     }
   }
 
+  const handleDeleteBlog = async () =>{
+    try {
+      await blogService.deleteBlog(blog.id)
+      await fetchBlogs()
+    } catch (exception) {
+      setErrorMessage('Error deleting blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   return (
     <div className='flex border p-2 border-gray-500 max-w-[550px]'>
+      <button onClick={handleDeleteBlog} className='!bg-red-400'>Delete</button>
       {blog.title}
       <div className='ml-auto'>
         <Togglable buttonLabel="View" cancelLabel="Hide">
