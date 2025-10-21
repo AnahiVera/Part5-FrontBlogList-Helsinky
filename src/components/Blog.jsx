@@ -4,6 +4,7 @@ import blogService from '../services/blogs'
 
 const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
   const [likes, setLikes] = useState(blog.likes)
+  const userIsCreator = user && blog.user && user.id === blog.user.id
 
   // Sincronizar likes cuando cambie el blog
   useEffect(() => {
@@ -37,9 +38,12 @@ const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
   }
 
   const handleDeleteBlog = async () =>{
+    if (!userIsCreator) return // Solo permite borrar si es el creador
     try {
-      await blogService.deleteBlog(blog.id)
-      await fetchBlogs()
+      if (window.confirm(`Are you sure you want to delete ${blog.title} by ${blog.author}?`)) {
+        await blogService.deleteBlog(blog.id)
+        await fetchBlogs()
+      }
     } catch (exception) {
       setErrorMessage('Error deleting blog')
       setTimeout(() => {
@@ -50,7 +54,9 @@ const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
 
   return (
     <div className='flex border p-2 border-gray-500 max-w-[550px]'>
+     {userIsCreator && (
       <button onClick={handleDeleteBlog} className='!bg-red-400'>Delete</button>
+    )}
       {blog.title}
       <div className='ml-auto'>
         <Togglable buttonLabel="View" cancelLabel="Hide">
