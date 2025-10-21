@@ -1,10 +1,17 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
-
+import PropTypes from 'prop-types'
 
 //forwardRef is used to pass ref from parent to child component
 
 
-const Togglable = forwardRef((props:any, refs:any) => {
+
+
+const Togglable = forwardRef((props, refs) => {
+
+  Togglable.propTypes = {
+  buttonLabel: PropTypes.string.isRequired,
+  cancelLabel: PropTypes.string.isRequired
+}
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
@@ -36,4 +43,7 @@ const Togglable = forwardRef((props:any, refs:any) => {
   )
 })
 
+
+
 export default Togglable
+

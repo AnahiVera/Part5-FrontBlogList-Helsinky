@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-
+import PropTypes from 'prop-types'
 
 import loginService from '../services/login'
 import blogService from '../services/blogs'
@@ -10,6 +10,12 @@ import { useState } from 'react'
 
 const LoginForm = ({ setUser, user, setErrorMessage, setSuccessMessage }) => {
 
+    LoginForm.propTypes = {
+        setErrorMessage: PropTypes.func.isRequired,
+        setSuccessMessage: PropTypes.func.isRequired,
+        setUser: PropTypes.func.isRequired,
+        user: PropTypes.string.isRequired
+    }
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -38,7 +44,7 @@ const LoginForm = ({ setUser, user, setErrorMessage, setSuccessMessage }) => {
             setTimeout(() => {
                 setSuccessMessage(null)
             }, 5000)
-        } catch (exception) {
+        } catch {
             setErrorMessage('Wrong credentials')
             setTimeout(() => {
                 setErrorMessage(null)
@@ -63,7 +69,7 @@ const LoginForm = ({ setUser, user, setErrorMessage, setSuccessMessage }) => {
             })
             blogService.setToken(user.token) // le damos el token del objeto user, para que lo pase a las peticiones del blogService
         }
-    }, [])
+    }, [setUser])
 
 
 

@@ -29,7 +29,7 @@ const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
       setLikes(likes + 1)
 
       await fetchBlogs()
-    } catch (exception) {
+    } catch {
       setErrorMessage('Error updating blog')
       setTimeout(() => {
         setErrorMessage(null)
@@ -44,7 +44,7 @@ const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
         await blogService.deleteBlog(blog.id)
         await fetchBlogs()
       }
-    } catch (exception) {
+    } catch {
       setErrorMessage('Error deleting blog')
       setTimeout(() => {
         setErrorMessage(null)

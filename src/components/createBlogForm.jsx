@@ -43,7 +43,7 @@ const CreateBlogForm = ({ user,fetchBlogs, setErrorMessage, setSuccessMessage, b
             }
         
 
-        } catch (exception) {
+        } catch {
             setErrorMessage('Error creating blog')
             setTimeout(() => {
                 setErrorMessage(null)
