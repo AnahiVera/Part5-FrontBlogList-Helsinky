@@ -53,14 +53,14 @@ const Blog = ({ blog, setErrorMessage, user, fetchBlogs }) => {
   }
 
   return (
-    <div className='flex border p-2 border-gray-500 max-w-[550px]'>
+    <div className='blog flex border p-2 border-gray-500 max-w-[550px]'>
      {userIsCreator && (
       <button onClick={handleDeleteBlog} className='!bg-red-400'>Delete</button>
     )}
-      {blog.title}
+      {blog.title}, {blog.author}
       <div className='ml-auto'>
         <Togglable buttonLabel="View" cancelLabel="Hide">
-          {blog.author} {blog.url} likes {likes}
+           {blog.url} likes {likes}
           <button onClick={handleLike}>Like</button>
           <div>Added by {blog.user && blog.user.name ? blog.user.name : 'Unknown'}</div>
         </Togglable>

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 
 
-const Togglable = forwardRef((props, refs) => {
+const Togglable = forwardRef((props, ref) => {
 
   Togglable.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
@@ -22,7 +22,7 @@ const Togglable = forwardRef((props, refs) => {
   }
 
 // El componente usa el hook useImperativeHandle para que su función toggleVisibility esté disponible fuera del componente.
-   useImperativeHandle(refs, () => {
+   useImperativeHandle(ref, () => {
     return {
       toggleVisibility
     }

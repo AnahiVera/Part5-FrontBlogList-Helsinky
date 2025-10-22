@@ -13,6 +13,11 @@ export default defineConfig({
         target: 'http://localhost:3003',
         changeOrigin: true
       }
-    }
+    },
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './testSetup.js', 
   }
 })
