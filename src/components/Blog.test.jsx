@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
+import blogService from '../services/blogs'
 import { cleanup } from '@testing-library/react'
 
+vi.mock('../services/blogs')
 
 afterEach(() => {
   cleanup()
@@ -68,6 +70,43 @@ test('shows URL and likes when the view button is clicked', async () => {
   expect(detailsContainer).toHaveTextContent(/likes\s*7/)
 })
 
+
+
+test('calls the like button twice', async () => {
+  const blog = {
+    title: 'Test blog',
+    author: 'Jane Doe',
+    url: 'https://janedoe.com',
+    likes: 5,
+    user: { id: 1, name: 'Tester' },
+    id: '123'
+  }
+
+  const fetchBlogsMock = vi.fn()
+  const setErrorMessageMock = vi.fn()
+
+  blogService.update.mockResolvedValue({ ...blog, likes: blog.likes + 1 })
+
+  render(
+    <Blog
+      blog={blog}
+      user={{ id: 1 }}
+      fetchBlogs={fetchBlogsMock}
+      setErrorMessage={setErrorMessageMock}
+    />
+  )
+
+  const user = userEvent.setup()
+  const viewButton = screen.getByText((content) => content.includes('View'))
+  await user.click(viewButton)
+
+  const likeButton = screen.getByText((content) => content.includes('Like'))
+
+  await user.click(likeButton)
+  await user.click(likeButton)
+
+  expect(blogService.update).toHaveBeenCalledTimes(2)
+})
 
 
 
