@@ -12,6 +12,7 @@ import Blog from './components/Blog';
 import CreateBlogForm from './components/createBlogForm';
 import Notification from './components/Notification';
 import Togglable from './components/Togglable';
+import Footer from './components/Footer';
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
@@ -43,7 +44,7 @@ const App = () => {
       </div>
 
       <div>
-        <h2>blogs</h2>
+        <h2>Blogs</h2>
          <button
           onClick={() => setSortAsc(!sortAsc)}
           className="mb-2 border px-2 py-1 rounded"
@@ -74,6 +75,9 @@ const App = () => {
       {/* Notification components */}
       <Notification message={errorMessage} type="error" />
       <Notification message={successMessage} type="success" />
+
+
+       <Footer />
 
     </div>
   )
