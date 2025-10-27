@@ -34,12 +34,20 @@ const App = () => {
     fetchBlogs()
   }, [])
 
+   // ← NUEVO: Recargar blogs cada vez que el usuario cambie (login/logout)
+  useEffect(() => {
+    if (user) {
+      fetchBlogs()
+    }
+  }, [user]) // Se ejecuta cuando 'user' cambia
+
+
 
   return (
     <div className='p-4'>
       <div>
         <Togglable buttonLabel="Login" cancelLabel='Cancel'>
-          <LoginForm setUser={setUser} user={user} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage} />
+          <LoginForm setUser={setUser} user={user} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage}  fetchBlogs={fetchBlogs} />
         </Togglable>
       </div>
 

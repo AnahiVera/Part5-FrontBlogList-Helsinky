@@ -8,7 +8,7 @@ import blogService from '../services/blogs'
 import { useState } from 'react'
 
 
-const LoginForm = ({ setUser, user, setErrorMessage, setSuccessMessage }) => {
+const LoginForm = ({ setUser, user, setErrorMessage, setSuccessMessage, fetchBlogs }) => {
 
     LoginForm.propTypes = {
         setErrorMessage: PropTypes.func.isRequired,
@@ -44,6 +44,8 @@ const LoginForm = ({ setUser, user, setErrorMessage, setSuccessMessage }) => {
             setTimeout(() => {
                 setSuccessMessage(null)
             }, 5000)
+
+ 
         } catch {
             setErrorMessage('Wrong credentials')
             setTimeout(() => {
@@ -68,6 +70,8 @@ const LoginForm = ({ setUser, user, setErrorMessage, setSuccessMessage }) => {
                 id: JSON.parse(atob(user.token.split('.')[1])).id // extrae el id user del token
             })
             blogService.setToken(user.token) // le damos el token del objeto user, para que lo pase a las peticiones del blogService
+
+        
         }
     }, [setUser])
 
