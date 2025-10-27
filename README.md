@@ -55,6 +55,9 @@ yarn test
 ## Backend
 This frontend expects a compatible backend API (see `Part4-BlogsList` in this repository or your own backend).
 
+##
+ **Testing E2E**: [Repositorio separado](https://github.com/AnahiVera/E2E-testing-Playwright) (ejercicios 5.17-5.22)
+
 
 <!-- elsLint config,proptypes, use of jwt for log in and local storage for session data saving -->
 <!-- testing installing Vitest and the jsdom library simulating a web browser -->
